@@ -1,0 +1,32 @@
+{
+    "dataset": "TESS",
+    "architecture": "CNN-BiLSTM-Attention speech branch + frozen DistilBERT text branch + fusion projection",
+    "speech_branch": "Mel Spectrogram + Delta + MFCC -> CNN -> BiLSTM -> Attention",
+    "text_branch": "distilbert-base-uncased",
+    "text_encoder_trainable": false,
+    "fusion_method": "Concatenation + fusion projection",
+    "best_epoch": 18,
+    "best_validation_macro_f1": 0.9950085008064867,
+    "test_accuracy": 0.9860365198711063,
+    "test_uar": 0.9860365198711063,
+    "test_macro_f1": 0.9860569920185912,
+    "classes": [
+        "anger",
+        "disgust",
+        "fear",
+        "happiness",
+        "neutral",
+        "sadness",
+        "surprise"
+    ],
+    "split_strategy": "speaker_aware",
+    "base_train_speaker": "oaf",
+    "target_speaker": "yaf",
+    "adapt_ratio": 0.05,
+    "max_text_len": 32,
+    "batch_size": 16,
+    "learning_rate": 2e-05,
+    "weight_decay": 0.0001,
+    "gradient_clipping": 1.0,
+    "seed": 42
+}

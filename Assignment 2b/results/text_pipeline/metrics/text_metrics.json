@@ -1,0 +1,28 @@
+{
+    "dataset": "TESS (Toronto Emotional Speech Set)",
+    "model_name": "distilbert-base-uncased",
+    "architecture": "DistilBERT Transformer Encoder + CLS Pooling + Classification Head",
+    "best_epoch": 5,
+    "best_validation_macro_f1": 6.350461705594785,
+    "test_accuracy": 14.285714285714285,
+    "test_uar": 14.285714285714285,
+    "test_macro_f1": 6.348408589952541,
+    "classes": [
+        "anger",
+        "disgust",
+        "fear",
+        "happiness",
+        "neutral",
+        "sadness",
+        "surprise"
+    ],
+    "split_strategy": "speaker_aware",
+    "base_train_speaker": "oaf",
+    "target_speaker": "yaf",
+    "adapt_ratio": 0.05,
+    "max_len": 32,
+    "batch_size": 16,
+    "learning_rate": 2e-05,
+    "seed": 42,
+    "note": "TESS text content is extracted from filenames/transcripts and is limited. Text-only emotion performance may not generalize like models trained on full natural-language emotion datasets."
+}
