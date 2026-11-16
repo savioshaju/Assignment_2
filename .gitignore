@@ -1,4 +1,5 @@
 venv/
+**/venv/**
 __pycache__/
 *.pyc
 *.npy
@@ -11,9 +12,15 @@ logs/
 cache/
 processed_dataset/
 processed_data/
+**/processed_data/**
 saved_models/
+**/saved_models/**
 .idea/
 .vscode/
 dataset*
 Tasks
 Report
+results_historical_backup/
+**/results_historical_backup/**
+reproduction_run/
+**/reproduction_run/**

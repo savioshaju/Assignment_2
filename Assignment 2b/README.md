@@ -12,6 +12,11 @@ This project implements a comparative emotion recognition system using three cor
 
 The primary dataset used for the core implementation is the Toronto Emotional Speech Set (TESS). The core pipelines are designed to evaluate how acoustic information, textual information, and combined multimodal information contribute to emotion classification.
 
+## Project Links
+
+- **GitHub Repository**: [https://github.com/savioshaju/Assignment_2](https://github.com/savioshaju/Assignment_2)
+- **Trained Model Checkpoints (Google Drive)**: [https://drive.google.com/drive/folders/15YZdjhHsL-CtgAwFPwH1rJzM52Lnl5CG](https://drive.google.com/drive/folders/15YZdjhHsL-CtgAwFPwH1rJzM52Lnl5CG)
+
 ## Key Results
 
 | Pipeline | Accuracy |
@@ -47,8 +52,8 @@ The primary dataset used for the core implementation is the Toronto Emotional Sp
 ### 1. Clone the Repository
 Clone the project to your local machine and open the project directory.
 ```powershell
-git clone https://github.com/savioshaju/Multimodal-Emotion-Recognition.git
-cd "Multimodal-Emotion-Recognition"
+git clone https://github.com/savioshaju/Assignment_2.git
+cd "Assignment_2/Assignment 2b"
 ```
 
 ### 2. Setup the Environment
@@ -89,7 +94,7 @@ Trained model checkpoints are not included directly in this GitHub repository be
 
 All trained model checkpoints are stored separately in Google Drive:
 
-[Download Trained Model Checkpoints](https://drive.google.com/drive/folders/1Y0OlP0rBU5A2lPE7DFwtUskw0kB71XmN?usp=sharing)
+[Download Trained Model Checkpoints](https://drive.google.com/drive/folders/15YZdjhHsL-CtgAwFPwH1rJzM52Lnl5CG)
 
 After downloading, place each checkpoint folder inside the corresponding pipeline directory:
 
