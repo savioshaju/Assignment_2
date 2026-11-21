@@ -2,6 +2,12 @@
 
 This project aligns speech audio with text transcripts using the Montreal Forced Aligner (MFA). It measures word and phoneme boundaries across native radio news and non-native English learner recordings.
 
+## Project Links
+
+- **GitHub Repository**: [https://github.com/savioshaju/Assignment_2](https://github.com/savioshaju/Assignment_2)
+- **Assignment 2a Report**: [Report.pdf](Report.pdf)
+- **Combined Assignment Report**: [../Report.pdf](../Report.pdf)
+
 ---
 
 ## Folder Structure
