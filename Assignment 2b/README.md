@@ -101,7 +101,7 @@ models/fusion_pipeline_MELD/saved_models/
 
 ### 4. Running the Pipelines
 
-The project contains three core TESS pipelines and two additional experimental pipelines. Each pipeline must be run from its respective directory inside `models/`.
+The project contains three core TESS pipelines and two additional experimental pipelines. You can run each pipeline either by navigating into its directory or directly from `Assignment 2b/`:
 
 #### Speech Pipeline
 This pipeline predicts emotion from audio waveforms using acoustic features (Mel Spectrogram, Delta, MFCC) with a CNN + BiLSTM + Attention architecture.
@@ -111,6 +111,7 @@ cd models\speech_pipeline
 python preprocess.py
 python train.py
 python test.py
+cd ..\..
 ```
 * `python preprocess.py`: Extracts acoustic features and generates the `metadata.csv` from the dataset.
 * `python train.py`: Trains the CNN-BiLSTM-Attention model, evaluates it, and generates results.
@@ -125,6 +126,7 @@ cd models\text_pipeline
 python preprocess.py
 python train.py
 python test.py
+cd ..\..
 ```
 * `python preprocess.py`: Generates the text-focused `metadata.csv` from filename transcripts.
 * `python train.py`: Trains the DistilBERT model, evaluates it, and generates results.
@@ -138,6 +140,7 @@ cd models\fusion_pipeline
 python preprocess.py
 python train.py
 python test.py
+cd ..\..
 ```
 * `python preprocess.py`: Generates the dual-modal `metadata.csv` with both audio paths and text.
 * `python train.py`: Trains the multimodal fusion model (CNN-BiLSTM-Attention + DistilBERT), evaluates it, and generates results.
@@ -152,6 +155,7 @@ cd models\text_pipeline_DailyDialog
 python preprocess.py
 python train.py
 python test.py
+cd ..\..
 ```
 * `python preprocess.py`: Parses DailyDialog text and emotion files inside the `data/` folder and generates `metadata.csv` containing train/val/test splits.
 * `python train.py`: Trains a `roberta-base` text emotion classifier using a WeightedRandomSampler to handle extreme label imbalance.
@@ -165,6 +169,7 @@ cd models\fusion_pipeline_MELD
 python preprocess.py
 python train.py
 python test.py
+cd ..\..
 ```
 * `python preprocess.py`: Processes MELD train/dev/test metadata (`dataset1`), extracts acoustic features from video/audio files, and aligns them with text utterances.
 * `python train.py`: Trains the multimodal fusion model. The training script supports joint fine-tuning of DistilBERT and the CNN-BiLSTM-Attention speech branch using a class-weighted loss function.

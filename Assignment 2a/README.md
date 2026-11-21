@@ -88,10 +88,11 @@ Assignment 2a/
 
 ## Step 1: Install MFA and Download Models
 
-Run these commands to set up the environment and download the models:
+From the repository root, enter the `Assignment 2a` directory, set up the Conda environment, and download the acoustic models:
 
 ```bash
-conda create -n mfa -c conda-forge montreal-forced-aligner python=3.10 ffmpeg -y
+cd "Assignment 2a"
+conda create -n mfa -c conda-forge montreal-forced-aligner python=3.10 ffmpeg sox -y
 conda activate mfa
 mfa model download acoustic english_us_arpa
 mfa model download acoustic english_mfa
