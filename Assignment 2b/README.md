@@ -1,13 +1,5 @@
 # Multimodal Emotion Recognition
 
-![Python](https://img.shields.io/badge/Python-3.11-blue)
-![PyTorch](https://img.shields.io/badge/PyTorch-2.x-red)
-![Transformers](https://img.shields.io/badge/HuggingFace-Transformers-yellow)
-![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux-green)
-![Status](https://img.shields.io/badge/Status-Research%20Project-purple)
-
-
-
 This project implements a comparative emotion recognition system using three core pipelines: speech-only emotion recognition, text-only emotion recognition, and multimodal speech-text fusion.
 
 The primary dataset used for the core implementation is the Toronto Emotional Speech Set (TESS). The core pipelines are designed to evaluate how acoustic information, textual information, and combined multimodal information contribute to emotion classification.

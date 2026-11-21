@@ -1,10 +1,5 @@
 # Speech and Language Processing -- Assignment 2
 
-[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux-green)](#)
-[![LaTeX](https://img.shields.io/badge/LaTeX-MiKTeX%20%7C%20TeXLive-blue)](#)
-[![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11-yellow)](#)
-[![GitHub](https://img.shields.io/badge/GitHub-savioshaju%2FAssignment__2-black)](https://github.com/savioshaju/Assignment_2)
-
 This repository contains the complete deliverables, experimental pipelines, source code, and comprehensive LaTeX reports for both parts of **Assignment 2**:
 
 1. **Assignment 2a**: Forced Alignment using Montreal Forced Aligner (MFA)
