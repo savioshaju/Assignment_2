@@ -2,11 +2,13 @@
 
 This project implements a comparative emotion recognition system using three core pipelines: speech-only emotion recognition, text-only emotion recognition, and multimodal speech-text fusion.
 
-The primary dataset used for the core implementation is the Toronto Emotional Speech Set (TESS). The core pipelines are designed to evaluate how acoustic information, textual information, and combined multimodal information contribute to emotion classification.
+The primary dataset used for the core implementation is the Toronto Emotional Speech Set (TESS). The core pipelines are designed to evaluate how acoustic information, textual information, and joint multimodal information contribute to emotion classification.
 
 ## Project Links
 
 - **GitHub Repository**: [https://github.com/savioshaju/Assignment_2](https://github.com/savioshaju/Assignment_2)
+- **Assignment 2b Report**: [Report.pdf](Report.pdf)
+- **Assignment 2 Report**: [../Report.pdf](../Report.pdf)
 - **Trained Model Checkpoints (Google Drive)**: [https://drive.google.com/drive/folders/15YZdjhHsL-CtgAwFPwH1rJzM52Lnl5CG](https://drive.google.com/drive/folders/15YZdjhHsL-CtgAwFPwH1rJzM52Lnl5CG)
 
 ## Key Results

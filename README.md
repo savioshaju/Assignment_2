@@ -13,7 +13,7 @@ This repository contains the complete deliverables, experimental pipelines, sour
 |---|---|---|
 | **Assignment 2a Report** | Forced Alignment using Montreal Forced Aligner (MFA) | [`Assignment 2a/Report.pdf`](Assignment%202a/Report.pdf) |
 | **Assignment 2b Report** | Multimodal Emotion Recognition (Speech, Text, Fusion) | [`Assignment 2b/Report.pdf`](Assignment%202b/Report.pdf) |
-| **Combined Assignment 2 Report** | Unified Master Report encompassing Parts I & II | [`Report.pdf`](Report.pdf) |
+| **Assignment 2 Report** | Unified Master Report encompassing Parts I & II | [`Report.pdf`](Report.pdf) |
 
 - **GitHub Repository**: [https://github.com/savioshaju/Assignment_2](https://github.com/savioshaju/Assignment_2)
 - **Trained Model Checkpoints & Artifacts (Google Drive)**: [https://drive.google.com/drive/folders/15YZdjhHsL-CtgAwFPwH1rJzM52Lnl5CG](https://drive.google.com/drive/folders/15YZdjhHsL-CtgAwFPwH1rJzM52Lnl5CG)
