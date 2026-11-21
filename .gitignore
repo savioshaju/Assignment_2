@@ -82,7 +82,7 @@ mfa_temp/
 *.mfa
 
 # ------------------------------------------------------------------------------
-# 5. LaTeX Build Artifacts & Source Directories
+# 5. Build Artifacts & Source Directories
 # ------------------------------------------------------------------------------
 *.aux
 *.log

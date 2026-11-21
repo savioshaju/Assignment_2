@@ -12,7 +12,7 @@ Generates strictly the three required visual outputs:
 
 Outputs are saved in:
 - Assignment 2a/experiments/visualizations/
-- Assignment 2a/Report/images/ (for LaTeX document integration)
+- Assignment 2a/Report/images/
 """
 
 import csv

@@ -1,6 +1,6 @@
 # Speech and Language Processing -- Assignment 2
 
-This repository contains the complete deliverables, experimental pipelines, source code, and comprehensive LaTeX reports for both parts of **Assignment 2**:
+This repository contains the complete deliverables, experimental pipelines, source code, and comprehensive reports for both parts of **Assignment 2**:
 
 1. **Assignment 2a**: Forced Alignment using Montreal Forced Aligner (MFA)
 2. **Assignment 2b**: Multimodal Emotion Recognition using Speech, Text, and Speech-Text Fusion
@@ -24,9 +24,7 @@ This repository contains the complete deliverables, experimental pipelines, sour
 
 ```text
 Assignment_2/
-├── preamble.tex                          # Unified shared LaTeX preamble
-├── main.tex                              # Combined Report master LaTeX file
-├── Report.pdf                            # Generated Unified Assignment 2 Report
+├── Report.pdf                            # Unified Assignment 2 Report
 │
 ├── Assignment 2a/                        # Assignment 2a Directory
 │   ├── wav/                              # Original speech audio recordings
@@ -44,12 +42,14 @@ Assignment_2/
     │   ├── fusion_pipeline/              # Multimodal Speech-Text Fusion
     │   ├── text_pipeline_DailyDialog/    # DailyDialog supporting text baseline
     │   └── fusion_pipeline_MELD/         # MELD supporting multimodal baseline
-    ├── results/                          # Experimental outputs, plots, and metrics
+    ├── Results/                          # Experimental outputs, plots, and metrics
     │   ├── speech_pipeline/
     │   ├── text_pipeline/
     │   ├── fusion_pipeline/
     │   ├── text_pipeline_DailyDialog/
-    │   └── fusion_pipeline_MELD/
+    │   ├── fusion_pipeline_MELD/
+    │   ├── plots/
+    │   └── all_model_variants_accuracy_table.csv
     ├── Report.pdf                        # Assignment 2b Report
     ├── requirements.txt                  # Python dependencies
     ├── setup.bat                         # Environment setup script
@@ -93,48 +93,3 @@ Assignment 2b implements and compares three emotion recognition architectures ac
 | **Multimodal Fusion SER (MELD)** | MELD | Audio + Text | **59.50%** | **41.36%** | Supporting Baseline |
 
 - **Documentation**: See [`Assignment 2b/README.md`](Assignment%202b/README.md).
-
----
-
-## Single Source of Truth LaTeX Architecture
-
-A core engineering design of this repository is the **Single Source of Truth** architecture for report compilation:
-
-### 1. Zero Duplication of Content
-- Each chapter exists **only once** as a `.tex` file in its native directory:
-  - Part I chapters: `Assignment 2a/Report/chapters/`
-  - Part II chapters: `Assignment 2b/Report/chapters/`
-- Neither chapters nor figures are copied or duplicated.
-
-### 2. Shared Preamble (`preamble.tex`)
-- Common packages (`amsmath`, `geometry`, `booktabs`, `caption`, `subcaption`, `titlesec`, `hyperref`, `xcolor`, `listings`) and unified formatting rules are centralized in `preamble.tex` at the repository root.
-- All three master files (`Assignment 2a/Report/main.tex`, `Assignment 2b/Report/main.tex`, and root `main.tex`) include this shared preamble via `\input`.
-
-### 3. Compilation Targets
-
-#### To compile the Assignment 2a Report:
-```bash
-cd "Assignment 2a/Report"
-pdflatex -interaction=nonstopmode main.tex
-pdflatex -interaction=nonstopmode main.tex
-# Outputs: Assignment 2a/Report/Report.pdf -> Assignment 2a/Report.pdf
-```
-
-#### To compile the Assignment 2b Report:
-```bash
-cd "Assignment 2b/Report"
-pdflatex -interaction=nonstopmode main.tex
-pdflatex -interaction=nonstopmode main.tex
-# Outputs: Assignment 2b/Report/Report.pdf -> Assignment 2b/Report.pdf
-```
-
-#### To compile the Combined Assignment 2 Report:
-```bash
-cd "Assignment_2"
-pdflatex -interaction=nonstopmode main.tex
-pdflatex -interaction=nonstopmode main.tex
-# Outputs: Report.pdf
-```
-
-### 4. Direct Propagation
-Any modification, correction, or addition made to an individual chapter file immediately propagates to **both** its individual assignment report and the combined master report during compilation.
