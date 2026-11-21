@@ -202,14 +202,6 @@ Performance metrics from `experiments/comparison/alignment_metrics.csv`:
 
 ---
 
-## Extra Credit Features
-
-1. **Custom Dictionary Curation:** Added missing proper nouns (`DUKAKIS`, `HENNESSY`, `MAFFY`, `MELNICOVE`) and manually corrected the initialism `WBUR`.
-2. **Multiple Acoustic Model Architectures:** Compared `english_us_arpa` (Arpabet) against `english_mfa` (IPA) on native and learner speech.
-3. **Automated Pipeline:** Automated data preparation, alignment execution, and quantitative reporting in `scripts/run_experiments.py`.
-
----
-
 ## Troubleshooting
 
 1. **Audio Header Error (`NIST_1A`):**
