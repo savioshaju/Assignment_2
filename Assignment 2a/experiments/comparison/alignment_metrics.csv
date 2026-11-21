@@ -1,0 +1,5 @@
+Experiment,Acoustic_Model,Phone_Set,Dictionary,Status,Exit_Code,Duration_Sec,Success_Count,Fail_Count,Total_Words,Total_Phones,Short_Phones_lt10ms,Long_Phones_gt1s,Long_Words_gt2s,Silence_Intervals,OOV_Unhandled
+E1,english_us_arpa,Arpabet,english_us_arpa.dict,COMPLETED,0,27.84,6,0,0,0,0,0,0,0,0
+E2,english_mfa,IPA,english_mfa_standard.dict,COMPLETED,0,29.03,6,0,0,0,0,0,0,0,0
+E3,english_us_arpa,Arpabet,custom_us_arpa.dict,COMPLETED,0,28.38,6,0,0,0,0,0,0,0,0
+E4,english_mfa,IPA,custom_mfa_ipa.dict,COMPLETED,0,34.92,6,0,0,0,0,0,0,0,0

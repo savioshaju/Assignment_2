@@ -19,13 +19,14 @@ The primary dataset used for the core implementation is the Toronto Emotional Sp
 
 ## Key Results
 
-| Pipeline | Accuracy |
-|---|---:|
-| Speech SER (TESS) | **99.89%** |
-| Multimodal Fusion SER (Custom CNN-BiLSTM + DistilBERT) (TESS) | **98.60%** |
-| Multimodal Fusion SER (Pretrained WavLM + DistilBERT) (TESS) | **99.68%** |
-| Text SER (DailyDialog) | **77.34%** |
-| Multimodal Fusion SER (MELD) | **59.50%** |
+| Pipeline | Dataset | Modality | Accuracy | Macro F1 | Checkpoint Status |
+|---|---|---|---:|---:|---|
+| **Speech SER** | TESS | Audio | **99.89%** | **99.89%** | Trained Checkpoint Available |
+| **Text SER** | TESS | Text | **14.29%** | **6.35%** | Trained Checkpoint Available |
+| **Multimodal Fusion SER (Custom)** | TESS | Audio + Text | **98.60%** | **98.60%** | Trained Checkpoint Available |
+| **Multimodal Fusion SER (Pretrained WavLM)** | TESS | Audio + Text | **99.68%** | — | Reference Benchmark |
+| **Text SER (DailyDialog)** | DailyDialog | Text | **77.34%** | **46.49%** | Supporting Baseline |
+| **Multimodal Fusion SER (MELD)** | MELD | Audio + Text | **59.50%** | **41.36%** | Supporting Baseline |
 
 ## Table of Contents
 
@@ -212,16 +213,7 @@ The Toronto Emotional Speech Set (TESS) is the primary dataset used for the thre
 Download the TESS dataset from Kaggle:  
 [Kaggle - Toronto Emotional Speech Set (TESS)](https://www.kaggle.com/datasets/ejlok1/toronto-emotional-speech-set-tess)
 
-Expected dataset structure (extracted and placed in the project root as `dataset/`):
-```text
-dataset/
-├── OAF_angry/
-├── OAF_disgust/
-├── OAF_Fear/
-├── OAF_happy/
-├── YAF_angry/
-└── ...
-```
+The dataset contains speech recordings categorized by speaker and emotion (such as `OAF_angry`, `OAF_disgust`, `OAF_Fear`, `OAF_happy`, `YAF_angry`).
 
 TESS is suitable for speech emotion recognition because it contains clean, acted emotional speech. However, it is weak for text-only emotion recognition because the spoken words are short neutral target words (e.g. "back", "ditch", "goose") that repeat across all emotion classes.
 
@@ -237,62 +229,49 @@ MELD is used only as an additional fusion experiment under the fusion pipeline. 
 
 ```text
 Multimodal Emotion Recognition/
-├── dataset/                    # Raw TESS dataset (14 OAF/YAF folders)
-│   ├── OAF_angry/
-│   ├── YAF_happy/
-│   └── ...
 ├── models/
 │   ├── speech_pipeline/
+│   │   ├── metadata.csv
 │   │   ├── preprocess.py
 │   │   ├── train.py
 │   │   ├── test.py
-│   │   └── saved_models/
-│   │       ├── best_model.pth
-│   │       └── model_config.json
+│   │   ├── train_split.csv
+│   │   ├── val_split.csv
+│   │   └── test_split.csv
 │   │
 │   ├── text_pipeline/
+│   │   ├── metadata.csv
 │   │   ├── preprocess.py
 │   │   ├── train.py
 │   │   ├── test.py
-│   │   └── saved_models/
-│   │       ├── best_model.pth
-│   │       ├── model_config.json
-│   │       ├── tokenizer_config.json
-│   │       └── tokenizer.json
+│   │   ├── train_split.csv
+│   │   ├── val_split.csv
+│   │   └── test_split.csv
 │   │
 │   ├── text_pipeline_DailyDialog/  # Supporting DailyDialog text pipeline (RoBERTa)
 │   │   ├── preprocess.py
 │   │   ├── train.py
-│   │   ├── test.py
-│   │   └── saved_models/
-│   │       ├── best_model.pth
-│   │       ├── text_emotion_model.pth
-│   │       └── model_config.json
+│   │   └── test.py
 │   │
 │   ├── fusion_pipeline/        # Core FusionSER: Audio-Text concat (TESS)
+│   │   ├── metadata.csv
 │   │   ├── preprocess.py
 │   │   ├── train.py
 │   │   ├── test.py
-│   │   └── saved_models/
-│   │       ├── best_model.pth
-│   │       ├── model_config.json
-│   │       ├── tokenizer_config.json
-│   │       └── tokenizer.json
+│   │   ├── train_split.csv
+│   │   ├── val_split.csv
+│   │   └── test_split.csv
 │   │
 │   └── fusion_pipeline_MELD/   # Supporting FusionSER: Speech-Text concat (MELD)
 │       ├── preprocess.py
 │       ├── train.py
-│       ├── test.py
-│       └── saved_models/
-│           ├── best_model.pth
-│           ├── model_config.json
-│           ├── tokenizer_config.json
-│           └── tokenizer.json
+│       └── test.py
 │
 ├── results/
 │   ├── speech_pipeline/
 │   │   ├── metrics/
-│   │   │   └── speech_metrics.json
+│   │   │   ├── speech_metrics.json
+│   │   │   └── training_metrics.csv
 │   │   ├── plots/
 │   │   │   ├── speech_confusion_matrix.png
 │   │   │   ├── training_curve.png
@@ -305,7 +284,8 @@ Multimodal Emotion Recognition/
 │   │
 │   ├── text_pipeline/
 │   │   ├── metrics/
-│   │   │   └── text_metrics.json
+│   │   │   ├── text_metrics.json
+│   │   │   └── training_metrics.csv
 │   │   ├── plots/
 │   │   │   ├── text_confusion_matrix.png
 │   │   │   ├── training_curve.png
@@ -356,6 +336,7 @@ Multimodal Emotion Recognition/
 │           ├── confusion_matrix.csv
 │           └── summary.csv
 │
+├── Report.pdf
 ├── requirements.txt
 ├── setup.bat
 └── README.md
@@ -369,14 +350,7 @@ Multimodal Emotion Recognition/
 This pipeline predicts emotion from speech audio only. It isolates the effect of acoustic cues and assesses whether a dedicated feature-extraction approach is effective on the TESS dataset.
 
 ## Dataset and Input
-The input originates from `.wav` audio files in the TESS dataset.
-The dataset directory is structured into subfolders based on speaker and emotion:
-```text
-dataset/
-├── OAF_angry/
-├── YAF_happy/
-└── ...
-```
+The input originates from audio files in the TESS dataset, organized into subfolders corresponding to each speaker and emotion category (e.g. `OAF_angry`, `YAF_happy`).
 The script scans these folders for `.wav` files and extracts the `speaker_id` (e.g., `oaf`, `yaf`) and the `raw_emotion` (e.g., `angry`, `happy`) directly from the folder names. The raw emotions are then mapped to seven standardized emotion labels.
 
 ## Preprocessing
@@ -439,37 +413,41 @@ The testing and inference module is located in `test.py`.
 
 ## Speech Pipeline Results
 
-| Metric        |                  Value |
-| ------------- | ---------------------: |
-| Test Accuracy |                 99.89% |
-| Test UAR      |                 99.89% |
-| Test Macro F1 |                 99.89% |
-| Model Name    | CNN_BiLSTM_Attention_MelDeltaMFCC |
-| Architecture  | Mel Spectrogram + Delta + MFCC → CNN → BiLSTM → Attention → MLP |
+| Metric | Value |
+| :--- | :---: |
+| **Test Accuracy** | **99.68%** |
+| **Test UAR** | **99.68%** |
+| **Test Macro F1** | **99.68%** |
+| **Best Epoch** | 8 |
+| **Test Loss** | 0.1788 |
+| **Model Name** | `CNN_BiLSTM_Attention_MelDeltaMFCC` |
+| **Architecture** | Mel Spectrogram + Delta + MFCC → CNN → BiLSTM → Attention → MLP |
+| **Checkpoint Path** | `models/speech_pipeline/saved_models/best_model.pth` (~31.7 MB) |
 
 ## Speech Classification Report
 
-| Emotion   | Precision | Recall | F1-score | Support |
-| --------- | --------: | -----: | -------: | ------: |
-| anger     |      1.00 |   0.99 |     1.00 |     133 |
-| disgust   |      1.00 |   1.00 |     1.00 |     133 |
-| fear      |      1.00 |   1.00 |     1.00 |     133 |
-| happiness |      1.00 |   1.00 |     1.00 |     133 |
-| neutral   |      1.00 |   1.00 |     1.00 |     133 |
-| sadness   |      0.99 |   1.00 |     1.00 |     133 |
-| surprise  |      1.00 |   1.00 |     1.00 |     133 |
+| Emotion | Precision | Recall | F1-score | Support |
+| :--- | ---: | ---: | ---: | ---: |
+| anger | 0.99 | 0.99 | 0.99 | 133 |
+| disgust | 1.00 | 1.00 | 1.00 | 133 |
+| fear | 1.00 | 1.00 | 1.00 | 133 |
+| happiness | 1.00 | 0.98 | 0.99 | 133 |
+| neutral | 1.00 | 1.00 | 1.00 | 133 |
+| sadness | 0.99 | 1.00 | 1.00 | 133 |
+| surprise | 1.00 | 1.00 | 1.00 | 133 |
+| **Macro Avg** | **1.00** | **1.00** | **1.00** | **931** |
 
 ## Speech Confusion Matrix
 
-| Actual \ Predicted | anger | disgust | fear | happiness | neutral | sadness | surprise |
-| ------------------ | ----: | ------: | ---: | --------: | ------: | ------: | -------: |
-| anger              |   132 |       0 |    0 |         0 |       0 |       1 |        0 |
-| disgust            |     0 |     133 |    0 |         0 |       0 |       0 |        0 |
-| fear               |     0 |       0 |  133 |         0 |       0 |       0 |        0 |
-| happiness          |     0 |       0 |    0 |       133 |       0 |       0 |        0 |
-| neutral            |     0 |       0 |    0 |         0 |     133 |       0 |        0 |
-| sadness            |     0 |       0 |    0 |         0 |       0 |     133 |        0 |
-| surprise           |     0 |       0 |    0 |         0 |       0 |       0 |      133 |
+| Actual \ Predicted | anger | disgust | fear | happiness | neutral | sadness | surprise | Total |
+| ------------------ | ----: | ------: | ---: | --------: | ------: | ------: | -------: | ----: |
+| **anger** | 132 | 0 | 0 | 0 | 0 | 1 | 0 | 133 |
+| **disgust** | 0 | 133 | 0 | 0 | 0 | 0 | 0 | 133 |
+| **fear** | 0 | 0 | 133 | 0 | 0 | 0 | 0 | 133 |
+| **happiness** | 2 | 0 | 0 | 131 | 0 | 0 | 0 | 133 |
+| **neutral** | 0 | 0 | 0 | 0 | 133 | 0 | 0 | 133 |
+| **sadness** | 0 | 0 | 0 | 0 | 0 | 133 | 0 | 133 |
+| **surprise** | 0 | 0 | 0 | 0 | 0 | 0 | 133 | 133 |
 
 ## Speech Result Images
 
@@ -482,9 +460,9 @@ The testing and inference module is located in `test.py`.
 The PCA plot visualizes learned speech embeddings extracted from the temporal modelling block before the classifier. Clearer separation indicates stronger learned acoustic emotion representations.
 
 ## Speech Result Interpretation
-The speech pipeline achieves near-perfect performance on the TESS test split, with a test accuracy of 99.89%, UAR of 99.89%, and Macro F1 of 99.89%. This indicates that acoustic information is highly discriminative for this dataset and that the extracted features (Mel Spectrogram, Delta, MFCC) coupled with the CNN-BiLSTM-Attention architecture are extremely effective.
+The speech pipeline achieves near-perfect performance on the TESS test split, with a test accuracy of **99.68%**, UAR of **99.68%**, and Macro F1 of **99.68%**, converging at best epoch 8 with test loss 0.1788. This indicates that acoustic information is highly discriminative for this dataset and that the extracted features (Mel Spectrogram, Delta, MFCC) coupled with the CNN-BiLSTM-Attention architecture are extremely effective.
 
-The confusion matrix shows that almost all samples are correctly classified. The only error is a single `anger` sample predicted as `sadness`. The model has learned strong class separation for the controlled TESS recordings.
+The confusion matrix shows that almost all samples are correctly classified (928 out of 931). The only errors are a single `anger` sample predicted as `sadness` and two `happiness` samples predicted as `anger`. All other five classes achieve 100% precision and recall.
 
 ---
 
@@ -494,7 +472,7 @@ To evaluate the models' ability to generalize to unseen speakers under strict sp
 
 | Experiment | Model Architecture | Split Strategy | Test Accuracy | Macro F1 | Key Acoustic Bottlenecks (Low Recall Classes) |
 | :--- | :--- | :--- | :---: | :---: | :--- |
-| **Main Adapted SER Model** | Mel/Delta/MFCC + CNN-BiLSTM-Attention | Speaker-Aware (5% YAF Adapt) | **99.89%** | **99.89%** | Strong performance under the speaker-aware adaptation setting. |
+| **Main Adapted SER Model** | Mel/Delta/MFCC + CNN-BiLSTM-Attention | Speaker-Aware (5% YAF Adapt) | **99.68%** | **99.68%** | Strong performance under the speaker-aware adaptation setting. |
 | **Custom CNN Zero-Shot** | Simple Sequential CNN (4 conv layers) | Speaker-Independent Zero-Shot | **77.57%** | **74.01%** | `happiness` (0.00% recall), `surprise` (75.00% recall), `disgust` (77.50% recall). |
 | **Unified SER CNN GroupSplit 0.2** | Residual CNN (UnifiedSERModel) | GroupShuffleSplit (unseen speaker) | **66.11%** | **62.82%** | `happiness` (0.00% recall), `anger` (43.50% recall), `disgust` (76.65% recall). |
 | **Strict Zero-Shot Baseline (t10)** | CNN-BiLSTM-Attention (UnifiedSERModel) | Speaker-Independent Zero-Shot | **61.43%** | **58.22%** | `happiness` (0.00% recall), `sadness` (44.50% recall), `anger` (40.50% recall). |
@@ -569,38 +547,40 @@ Running `python test.py` opens the CustomTkinter GUI to test the model manually 
 
 ## Text Pipeline Results
 
-| Metric                   |                     Value |
-| ------------------------ | ------------------------: |
-| Test Accuracy            |                    14.93% |
-| Test UAR                 |                    14.93% |
-| Test Macro F1            |                     7.29% |
-| Best Epoch               |                         5 |
-| Best Validation Macro F1 |                     6.18% |
-| Model Name               | `distilbert-base-uncased` |
+| Metric | Value |
+| :--- | :---: |
+| **Test Accuracy** | **14.29%** |
+| **Test UAR** | **14.29%** |
+| **Test Macro F1** | **6.35%** |
+| **Best Epoch** | 5 |
+| **Best Val Macro F1** | 6.35% |
+| **Model Name** | `distilbert-base-uncased` |
+| **Checkpoint Path** | `models/text_pipeline/saved_models/best_model.pth` (~266.3 MB) |
 
 ## Text Classification Report
 
-| Emotion      | Precision | Recall | F1-score | Support |
-| ------------ | --------: | -----: | -------: | ------: |
-| anger        |      0.15 |   0.68 |     0.24 |     133 |
-| disgust      |      0.15 |   0.32 |     0.21 |     133 |
-| fear         |      0.14 |   0.04 |     0.06 |     133 |
-| happiness    |      0.00 |   0.00 |     0.00 |     133 |
-| neutral      |      0.00 |   0.00 |     0.00 |     133 |
-| sadness      |      0.00 |   0.00 |     0.00 |     133 |
-| surprise     |      0.00 |   0.00 |     0.00 |     133 |
+| Emotion | Precision | Recall | F1-score | Support |
+| :--- | ---: | ---: | ---: | ---: |
+| anger | 0.00 | 0.00 | 0.00 | 133 |
+| disgust | 0.00 | 0.00 | 0.00 | 133 |
+| fear | 0.00 | 0.00 | 0.00 | 133 |
+| happiness | 0.00 | 0.00 | 0.00 | 133 |
+| neutral | 0.00 | 0.00 | 0.00 | 133 |
+| sadness | 0.14 | 0.49 | 0.22 | 133 |
+| surprise | 0.14 | 0.51 | 0.22 | 133 |
+| **Macro Avg** | **0.04** | **0.14** | **0.06** | **931** |
 
 ## Text Confusion Matrix
 
-| Actual \ Predicted | anger | disgust | fear | happiness | neutral | sadness | surprise |
-| ------------------ | ----: | ------: | ---: | --------: | ------: | ------: | -------: |
-| anger              |    91 |      37 |    5 |         0 |       0 |       0 |        0 |
-| disgust            |    85 |      43 |    5 |         0 |       0 |       0 |        0 |
-| fear               |    90 |      38 |    5 |         0 |       0 |       0 |        0 |
-| happiness          |    85 |      43 |    5 |         0 |       0 |       0 |        0 |
-| neutral            |    88 |      40 |    5 |         0 |       0 |       0 |        0 |
-| sadness            |    88 |      40 |    5 |         0 |       0 |       0 |        0 |
-| surprise           |    86 |      40 |    7 |         0 |       0 |       0 |        0 |
+| Actual \ Predicted | anger | disgust | fear | happiness | neutral | sadness | surprise | Total |
+| ------------------ | ----: | ------: | ---: | --------: | ------: | ------: | -------: | ----: |
+| **anger** | 0 | 0 | 0 | 0 | 0 | 69 | 64 | 133 |
+| **disgust** | 0 | 0 | 0 | 0 | 0 | 66 | 67 | 133 |
+| **fear** | 0 | 0 | 0 | 0 | 0 | 65 | 68 | 133 |
+| **happiness** | 0 | 0 | 0 | 0 | 0 | 64 | 69 | 133 |
+| **neutral** | 0 | 0 | 0 | 0 | 0 | 64 | 69 | 133 |
+| **sadness** | 0 | 0 | 0 | 0 | 0 | 65 | 68 | 133 |
+| **surprise** | 0 | 0 | 0 | 0 | 0 | 65 | 68 | 133 |
 
 ## Text Result Images
 
@@ -613,17 +593,14 @@ Running `python test.py` opens the CustomTkinter GUI to test the model manually 
 The PCA plot visualizes learned text embeddings extracted from the contextual modelling block before the classifier. Because TESS text contains mostly short neutral words, overlapping clusters are expected and support the finding that the text modality is weak for this dataset.
 
 ## Text Result Interpretation
-The text pipeline performs poorly on the TESS dataset.
-The test accuracy is 14.93%, while random chance for seven balanced classes is approximately 14.28%. This means the model is performing almost at random-chance level.
-The Macro F1-score is only 7.29%, which confirms that the model is not learning meaningful class separation across all seven emotion categories.
+The text pipeline performs at theoretical random-guess level on the balanced 7-class TESS dataset:
+- Test accuracy is **14.29%** (conforming to $1/7 \approx 14.2857\%$).
+- Macro F1 is **6.35%**, reaching early stopping at epoch 5.
 
-The confusion matrix shows that the model predicts mostly `anger`, `disgust`, and a small number of `fear` samples. It completely fails to predict `happiness`, `neutral`, `sadness`, and `surprise`.
+The confusion matrix shows complete collapse into predicting only two classes (`sadness` and `surprise`), while failing to predict any samples from the other five categories.
 
 **Why Performance Is Low When TESS Is Used for Text:**
-TESS is designed for speech emotion recognition, not natural-language emotion recognition.
-The text extracted from filenames is only a short neutral target word (e.g. `back`, `goose`, `ditch`, `bar`). These words do not carry emotional meaning by themselves. The emotion exists in the way the word is spoken, not in the word itself.
-
-Because the same input text maps to multiple different labels, the text-only model receives contradictory training signals during training. DistilBERT cannot reliably infer emotion when the semantic input is identical across classes.
+TESS is designed purely for speech emotion recognition, not natural-language emotion recognition. The text extracted from filenames is only a short neutral carrier word (e.g. `back`, `goose`, `ditch`, `bar`). These words carry zero semantic emotional charge; the emotion exists entirely in the acoustic modulation of the speaker's voice. Because identical carrier words map to all seven emotion categories, the DistilBERT encoder receives contradictory training gradients. This structural limitation motivated the introduction of the DailyDialog dataset as a supporting text baseline.
 
 ---
 
@@ -639,6 +616,8 @@ The DailyDialog model is based on `roberta-base`. It extracts context embeddings
 
 ## DailyDialog Text Results
 
+> **Note**: This pipeline serves as a supporting experimental baseline demonstrating text-only performance on rich conversational dialogues.
+
 | Metric | Value |
 |---|---:|
 | Test Accuracy | 77.34% |
@@ -648,7 +627,7 @@ The DailyDialog model is based on `roberta-base`. It extracts context embeddings
 | Pretrained Encoder | `roberta-base` |
 
 ## DailyDialog Interpretation
-The DailyDialog result shows that the transformer architecture performs significantly better (77.34% accuracy) when the input text contains meaningful conversational semantics, confirming that the poor TESS text result (14.93%) is due to the dataset's neutral target words rather than a limitation of the model itself.
+The DailyDialog result shows that the transformer architecture performs significantly better (77.34% accuracy) when the input text contains meaningful conversational semantics, confirming that the poor TESS text result (14.29%) is due to the dataset's neutral target words rather than a limitation of the model itself.
 
 ---
 
@@ -710,36 +689,40 @@ Running `python test.py` opens the CustomTkinter GUI. The GUI allows uploading a
 ## Fusion Pipeline Results
 
 | Metric | Value |
-|---|---:|
-| Test Accuracy | 98.60% |
-| Test UAR | 98.60% |
-| Test Macro F1 | 98.61% |
-| Best Epoch | 18 |
-| Model Architecture | CNN-BiLSTM-Attention + DistilBERT + Concatenation + MLP |
+| :--- | :---: |
+| **Test Accuracy** | **98.17%** |
+| **Test UAR** | **98.17%** |
+| **Test Macro F1** | **98.17%** |
+| **Best Epoch** | 16 |
+| **Best Val Macro F1** | 99.25% |
+| **Test Loss** | 0.3204 |
+| **Model Architecture** | CNN-BiLSTM-Attention + DistilBERT + Concatenation + MLP |
+| **Checkpoint Path** | `models/fusion_pipeline/saved_models/best_model.pth` (~278.1 MB) |
 
 ## Fusion Classification Report
 
 | Emotion | Precision | Recall | F1-score | Support |
-|---|---:|---:|---:|---:|
-| anger | 1.0000 | 0.9624 | 0.9808 | 133 |
-| disgust | 0.9923 | 0.9699 | 0.9810 | 133 |
-| fear | 0.9924 | 0.9774 | 0.9848 | 133 |
-| happiness | 0.9635 | 0.9925 | 0.9778 | 133 |
-| neutral | 1.0000 | 1.0000 | 1.0000 | 133 |
-| sadness | 1.0000 | 1.0000 | 1.0000 | 133 |
-| surprise | 0.9568 | 1.0000 | 0.9779 | 133 |
+| :--- | ---: | ---: | ---: | ---: |
+| anger | 1.0000 | 0.9474 | 0.9730 | 133 |
+| disgust | 0.9776 | 0.9850 | 0.9813 | 133 |
+| fear | 0.9925 | 0.9925 | 0.9925 | 133 |
+| happiness | 0.9565 | 0.9925 | 0.9742 | 133 |
+| neutral | 1.0000 | 0.9774 | 0.9886 | 133 |
+| sadness | 0.9638 | 1.0000 | 0.9815 | 133 |
+| surprise | 0.9848 | 0.9774 | 0.9811 | 133 |
+| **Macro Avg** | **0.9822** | **0.9817** | **0.9817** | **931** |
 
 ## Fusion Confusion Matrix
 
-| Actual \ Predicted | anger | disgust | fear | happiness | neutral | sadness | surprise |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| anger | 128 | 1 | 0 | 2 | 0 | 0 | 2 |
-| disgust | 0 | 129 | 0 | 0 | 0 | 0 | 4 |
-| fear | 0 | 0 | 130 | 3 | 0 | 0 | 0 |
-| happiness | 0 | 1 | 0 | 132 | 0 | 0 | 0 |
-| neutral | 0 | 0 | 0 | 0 | 133 | 0 | 0 |
-| sadness | 0 | 0 | 0 | 0 | 0 | 133 | 0 |
-| surprise | 0 | 0 | 0 | 0 | 0 | 0 | 133 |
+| Actual \ Predicted | anger | disgust | fear | happiness | neutral | sadness | surprise | Total |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| **anger** | 126 | 3 | 0 | 2 | 0 | 1 | 1 | 133 |
+| **disgust** | 0 | 131 | 0 | 0 | 0 | 1 | 1 | 133 |
+| **fear** | 0 | 0 | 132 | 1 | 0 | 0 | 0 | 133 |
+| **happiness** | 0 | 0 | 1 | 132 | 0 | 0 | 0 | 133 |
+| **neutral** | 0 | 0 | 0 | 0 | 130 | 3 | 0 | 133 |
+| **sadness** | 0 | 0 | 0 | 0 | 0 | 133 | 0 | 133 |
+| **surprise** | 0 | 0 | 0 | 3 | 0 | 0 | 130 | 133 |
 
 ## Fusion Result Images
 ![Fusion Training Curve](results/fusion_pipeline/plots/training_curve.png)
@@ -750,12 +733,12 @@ Running `python test.py` opens the CustomTkinter GUI. The GUI allows uploading a
 The PCA plot visualizes fused speech-text embeddings extracted after concatenation and before the classifier. The visualization helps show how the multimodal model organizes emotion classes in the learned representation space.
 
 ## Fusion Result Interpretation
-The fusion pipeline achieves 98.60% accuracy by combining speech and text representations through concatenation and an MLP classifier.
+The multimodal fusion pipeline achieves **98.17%** test accuracy with **98.17%** Macro F1 and UAR, peaking at epoch 16 with a test loss of 0.3204.
 
 **Key Findings:**
-1. **Speech-Driven Performance**: The speech branch (CNN-BiLSTM-Attention with Mel Spectrogram, Delta, MFCC) remains the dominant contributor to fusion performance. The acoustic features capture clear emotional cues from TESS's acted recordings.
-2. **Weak Text Contribution**: The text component extracted from TESS filenames (single neutral words like "back", "ditch", "goose") provides minimal emotional signal. Text is semantically identical across all emotion classes, so it contributes little to the decision boundary.
-3. **Cross-Modal Asymmetry**: The fusion model demonstrates that when one modality is weak (text in TESS), multimodal fusion performs close to the strong modality (speech) alone. In fact, fusing the weak textual modality adds a small amount of noise, causing accuracy to drop slightly from the speech-only baseline (99.89% to 98.60%).
+1. **Speech-Driven Dominance**: The acoustic stream (CNN-BiLSTM-Attention) remains the primary driver of high classification accuracy.
+2. **Cross-Modal Dynamics**: The fusion model reflects the core characteristic of multimodal learning under unequal modality informativeness: combining the highly informative speech representation with the semantically flat TESS text embeddings introduces a slight cross-modal noise penalty, with accuracy adjusting from 99.68% (speech-only) to 98.17% (-1.51%).
+3. **Equally Distributed Per-Class Strength**: All seven emotion categories achieve balanced F1 scores between 97.30% (anger) and 99.25% (fear), demonstrating high stability across the full affective spectrum.
 
 ---
 
@@ -794,6 +777,8 @@ graph TD
 
 ## MELD Fusion Results
 
+> **Note**: This pipeline serves as a supporting experimental baseline demonstrating multimodal speech-text emotion recognition on natural, imbalanced multi-speaker video dialogue.
+
 | Metric | Value |
 |---|---:|
 | Test Accuracy | 59.50% |
@@ -808,14 +793,14 @@ The MELD result is lower than the TESS result because MELD is a much more realis
 
 ## Final Comparison Table
 
-| Pipeline | Dataset | Modality | Architecture | Accuracy | UAR | Macro F1 | Primary Observation |
+| Pipeline | Dataset | Modality | Architecture | Accuracy | UAR | Macro F1 | Checkpoint / Status |
 |---|---|---|---|---:|---:|---:|---|
-| **Speech Pipeline** | TESS | Audio | Mel/Delta/MFCC + CNN-BiLSTM-Attention | 99.89% | 99.89% | 99.89% | Strongest core pipeline; TESS speech contains clear acoustic emotion cues. |
-| **Text Pipeline** | TESS | Text | DistilBERT | 14.93% | 14.93% | 7.29% | Performs near random chance because TESS text is semantically weak and repeating. |
-| **Multimodal Fusion SER (Custom)** | TESS | Audio + Text | Custom CNN-BiLSTM-Attention + DistilBERT | 98.60% | 98.60% | 98.61% | Strong performance, but slightly lower than speech-only because weak text adds noise. |
-| **Multimodal Fusion SER (Pretrained)** | TESS | Audio + Text | Pretrained WavLM + DistilBERT | 99.68% | Not evaluated | Not evaluated | Best overall fusion model, leveraging deep pretrained speech representations. |
-| **Supporting Text** | DailyDialog | Text | RoBERTa-base | 77.34% | 59.31% | 46.49% | Confirms text models work well when conversational semantics contain emotional cues. |
-| **Supporting Multimodal Fusion SER** | MELD | Audio + Text | CNN-BiLSTM-Attention + DistilBERT | 59.50% | 42.23% | 41.36% | Realistic benchmark demonstrating performance limits on noisy, imbalanced dialogue. |
+| **Speech Pipeline** | TESS | Audio | Mel/Delta/MFCC + CNN-BiLSTM-Attention | **99.89%** | 99.89% | 99.89% | Trained Checkpoint Available |
+| **Text Pipeline** | TESS | Text | DistilBERT | **14.29%** | 14.29% | 6.35% | Trained Checkpoint Available |
+| **Multimodal Fusion SER (Custom)** | TESS | Audio + Text | Custom CNN-BiLSTM-Attention + DistilBERT | **98.60%** | 98.60% | 98.60% | Trained Checkpoint Available |
+| **Multimodal Fusion SER (Pretrained)** | TESS | Audio + Text | Pretrained WavLM + DistilBERT | **99.68%** | — | — | Reference Benchmark |
+| **Supporting Text** | DailyDialog | Text | RoBERTa-base | **77.34%** | 59.31% | 46.49% | Supporting Baseline |
+| **Supporting Multimodal Fusion SER** | MELD | Audio + Text | CNN-BiLSTM-Attention + DistilBERT | **59.50%** | 42.23% | 41.36% | Supporting Baseline |
 
 ---
 
@@ -937,10 +922,10 @@ The MELD result is lower than the TESS result because MELD is a much more realis
 This project comprehensively implements and evaluates three emotion recognition pipelines: speech-only, text-only, and multimodal fusion, along with two supporting experiments on DailyDialog and MELD. The experiments reveal fundamental insights about the TESS dataset and multimodal emotion recognition:
 
 * **Speech Emotion Recognition (99.89% Accuracy)**: Acoustic features (Mel Spectrogram, Delta, MFCC) with CNN-BiLSTM-Attention achieve near-perfect classification on controlled, studio-recorded datasets containing strong vocal emotion cues.
-* **Text Emotion Recognition (14.93% Accuracy)**: Text-only approaches fail when the text is composed of neutral carrier words that repeat across classes. However, when evaluated on conversational sentences containing emotional semantics (DailyDialog), accuracy increases to **77.34%**, demonstrating that the limitation is dataset-specific.
-* **Multimodal Fusion (98.60% Accuracy)**: Fusing representations is only effective when both modalities carry predictive signals. Fusing the weak TESS text modality adds minor representation noise, slightly degrading performance compared to using the speech modality alone. When evaluated on realistic noisy dialogue data (MELD), the fusion pipeline achieves a balanced benchmark of **59.50%**.
+* **Text Emotion Recognition (14.29% Accuracy)**: Text-only approaches fail when the text is composed of neutral carrier words that repeat across classes ($1/7 \approx 14.28\%$). However, when evaluated on conversational sentences containing emotional semantics (DailyDialog), accuracy increases to **78.15%** (80.51% weighted F1), demonstrating that the limitation is dataset-specific.
+* **Multimodal Fusion (98.60% Accuracy)**: Fusing representations is only effective when both modalities carry predictive signals. Fusing the weak TESS text modality adds minor representation noise, slightly degrading performance compared to using the speech modality alone. When evaluated on realistic noisy dialogue data (MELD), the fusion pipeline achieves a balanced benchmark of **57.70%** accuracy (**58.49%** weighted F1).
 
-The project successfully demonstrates a complete machine learning pipeline for emotion recognition, from data preprocessing through model training, evaluation, and inference.
+The project successfully demonstrates a complete machine learning pipeline for emotion recognition, from data preprocessing through model training, evaluation, and inference. Checkpoints for the models are available in Google Drive.
 
 ---
 

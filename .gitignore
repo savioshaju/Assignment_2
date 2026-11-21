@@ -1,26 +1,132 @@
-venv/
-**/venv/**
+# ==============================================================================
+# Git Ignore Configuration for Assignment 2 (Speech & Language Processing)
+# Strictly aligned with Assignment 2a and Assignment 2b deliverables
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. Python & Environment
+# ------------------------------------------------------------------------------
 __pycache__/
-*.pyc
-*.npy
-*.pth
-*.pt
-*.wav
+**/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+**/env/
+venv/
+**/venv/
+.venv/
+**/.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ------------------------------------------------------------------------------
+# 2. Datasets & Raw Media (Google Drive Hosted)
+# ------------------------------------------------------------------------------
+# Raw audio/video media (Assignment 2b: TESS, MELD, DailyDialog)
 *.mp4
-checkpoints/
-logs/
-cache/
-processed_dataset/
+*.avi
+*.mov
+*.flac
+*.mp3
+*.wav
+
+# Un-ignore the provided audio files for Assignment 2a
+!Assignment 2a/wav/
+!Assignment 2a/wav/*.wav
+
+# Dataset directories
+dataset/
+dataset*/
+**/dataset*/
 processed_data/
-**/processed_data/**
+**/processed_data/
+processed_dataset/
+**/processed_dataset/
+data/
+**/data/
+
+# Intermediate feature numpy arrays
+*.npy
+*.npz
+
+# ------------------------------------------------------------------------------
+# 3. Model Weights & Checkpoints (Google Drive Hosted)
+# ------------------------------------------------------------------------------
+*.pt
+*.pth
+*.ckpt
+*.bin
+*.h5
+*.safetensors
+*.onnx
+checkpoints/
+**/checkpoints/
 saved_models/
-**/saved_models/**
+**/saved_models/
+
+# ------------------------------------------------------------------------------
+# 4. Montreal Forced Aligner (MFA) Workspaces & Caches (Assignment 2a)
+# ------------------------------------------------------------------------------
+mfa_workspace/
+**/mfa_workspace/
+.mfa_cache/
+**/.mfa_cache/
+corpus_normalized/
+**/corpus_normalized/
+corpus_staged/
+**/corpus_staged/
+mfa_temp/
+**/mfa_temp/
+*.mfa
+
+# ------------------------------------------------------------------------------
+# 5. LaTeX Build Artifacts & Source Directories
+# ------------------------------------------------------------------------------
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.bbl
+*.blg
+*.nav
+*.snm
+*.vrb
+*.lot
+*.lof
+*.tex
+Report/
+**/Report/
+!Report.pdf
+!**/Report.pdf
+
+# ------------------------------------------------------------------------------
+# 6. IDEs, Editors & OS Files
+# ------------------------------------------------------------------------------
 .idea/
 .vscode/
-dataset*
-Tasks
-Report
-results_historical_backup/
-**/results_historical_backup/**
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+Desktop.ini
+ehthumbs.db
+
+# ------------------------------------------------------------------------------
+# 7. Assignment Tasks & Internal Backups
+# ------------------------------------------------------------------------------
+Tasks/
+**/Tasks/
+*_backup/
+**/*_backup/
 reproduction_run/
-**/reproduction_run/**
+**/reproduction_run/
+.audit_backup/
+**/.audit_backup/
+backup_before_train_run/
+**/backup_before_train_run/
