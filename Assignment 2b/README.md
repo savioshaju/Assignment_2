@@ -87,7 +87,7 @@ source venv/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
-*Note on CUDA support*: To run models on GPU, make sure you install a version of PyTorch compatible with your CUDA toolkit (e.g., `pip install torch torchaudio torchvision --index-url https://download.pytorch.org/ml/cu121` for CUDA 12.1).
+*Note on CUDA support*: To run models on GPU, make sure you install a version of PyTorch compatible with your CUDA toolkit (e.g., `pip install torch torchaudio torchvision --index-url https://download.pytorch.org/whl/cu121` for CUDA 12.1).
 
 ### 3. Model Checkpoints
 
@@ -228,7 +228,7 @@ MELD is used only as an additional fusion experiment under the fusion pipeline. 
 ## Complete Project Folder Structure
 
 ```text
-Multimodal Emotion Recognition/
+Assignment 2b/
 ├── models/
 │   ├── speech_pipeline/
 │   │   ├── metadata.csv
@@ -267,7 +267,23 @@ Multimodal Emotion Recognition/
 │       ├── train.py
 │       └── test.py
 │
-├── results/
+├── Results/
+│   ├── all_model_variants_accuracy_table.csv  # Consolidated Accuracy Table
+│   ├── all_model_variants_accuracy_table.md
+│   ├── plots/                                 # Consolidated Evaluation Plots
+│   │   ├── README.md
+│   │   ├── speech_training_curve.png
+│   │   ├── speech_confusion_matrix.png
+│   │   ├── speech_pca_clusters.png
+│   │   ├── text_training_curve.png
+│   │   ├── text_confusion_matrix.png
+│   │   ├── text_pca_clusters.png
+│   │   ├── fusion_training_curve.png
+│   │   ├── fusion_confusion_matrix.png
+│   │   ├── fusion_pca_clusters.png
+│   │   ├── dailydialog_confusion_matrix.png
+│   │   └── meld_confusion_matrix.png
+│   │
 │   ├── speech_pipeline/
 │   │   ├── metrics/
 │   │   │   ├── speech_metrics.json
@@ -451,11 +467,11 @@ The testing and inference module is located in `test.py`.
 
 ## Speech Result Images
 
-![Speech Training Curve](results/speech_pipeline/plots/training_curve.png)
+![Speech Training Curve](Results/speech_pipeline/plots/training_curve.png)
 
-![Speech Confusion Matrix](results/speech_pipeline/plots/speech_confusion_matrix.png)
+![Speech Confusion Matrix](Results/speech_pipeline/plots/speech_confusion_matrix.png)
 
-![Speech Embeddings PCA](results/speech_pipeline/plots/speech_pca.png)
+![Speech Embeddings PCA](Results/speech_pipeline/plots/speech_pca.png)
 
 The PCA plot visualizes learned speech embeddings extracted from the temporal modelling block before the classifier. Clearer separation indicates stronger learned acoustic emotion representations.
 
@@ -584,11 +600,11 @@ Running `python test.py` opens the CustomTkinter GUI to test the model manually 
 
 ## Text Result Images
 
-![Text Training Curve](results/text_pipeline/plots/training_curve.png)
+![Text Training Curve](Results/text_pipeline/plots/training_curve.png)
 
-![Text Confusion Matrix](results/text_pipeline/plots/text_confusion_matrix.png)
+![Text Confusion Matrix](Results/text_pipeline/plots/text_confusion_matrix.png)
 
-![Text Embeddings PCA](results/text_pipeline/plots/text_pca.png)
+![Text Embeddings PCA](Results/text_pipeline/plots/text_pca.png)
 
 The PCA plot visualizes learned text embeddings extracted from the contextual modelling block before the classifier. Because TESS text contains mostly short neutral words, overlapping clusters are expected and support the finding that the text modality is weak for this dataset.
 
@@ -725,10 +741,10 @@ Running `python test.py` opens the CustomTkinter GUI. The GUI allows uploading a
 | **surprise** | 0 | 0 | 0 | 3 | 0 | 0 | 130 | 133 |
 
 ## Fusion Result Images
-![Fusion Training Curve](results/fusion_pipeline/plots/training_curve.png)
-![Fusion Confusion Matrix](results/fusion_pipeline/plots/fusion_confusion_matrix.png)
+![Fusion Training Curve](Results/fusion_pipeline/plots/training_curve.png)
+![Fusion Confusion Matrix](Results/fusion_pipeline/plots/fusion_confusion_matrix.png)
 
-![Fusion Embeddings PCA](results/fusion_pipeline/plots/fusion_pca.png)
+![Fusion Embeddings PCA](Results/fusion_pipeline/plots/fusion_pca.png)
 
 The PCA plot visualizes fused speech-text embeddings extracted after concatenation and before the classifier. The visualization helps show how the multimodal model organizes emotion classes in the learned representation space.
 
@@ -810,22 +826,22 @@ The MELD result is lower than the TESS result because MELD is a much more realis
 <table>
   <tr>
     <td align="center">
-      <img src="results/speech_pipeline/plots/training_curve.png" width="300"><br>
+      <img src="Results/speech_pipeline/plots/training_curve.png" width="300"><br>
       <b>Training Curve</b>
     </td>
     <td align="center">
-      <img src="results/speech_pipeline/plots/speech_confusion_matrix.png" width="300"><br>
+      <img src="Results/speech_pipeline/plots/speech_confusion_matrix.png" width="300"><br>
       <b>Confusion Matrix</b>
     </td>
     <td align="center">
-      <img src="results/speech_pipeline/plots/speech_pca.png" width="300"><br>
+      <img src="Results/speech_pipeline/plots/speech_pca.png" width="300"><br>
       <b>Speech Embeddings PCA</b>
     </td>
   </tr>
 </table>
 
 <p align="center">
-  <img src="results/speech_pipeline/plots/speech_representation_evolution.png" width="550" alt="Speech Embeddings PCA Space Separation"/>
+  <img src="Results/speech_pipeline/plots/speech_representation_evolution.png" width="550" alt="Speech Embeddings PCA Space Separation"/>
   <br>
   <i>Figure 1: Representations evolution of Speech Pipeline.</i>
 </p>
@@ -834,22 +850,22 @@ The MELD result is lower than the TESS result because MELD is a much more realis
 <table>
   <tr>
     <td align="center">
-      <img src="results/text_pipeline/plots/training_curve.png" width="300"><br>
+      <img src="Results/text_pipeline/plots/training_curve.png" width="300"><br>
       <b>Training Curve</b>
     </td>
     <td align="center">
-      <img src="results/text_pipeline/plots/text_confusion_matrix.png" width="300"><br>
+      <img src="Results/text_pipeline/plots/text_confusion_matrix.png" width="300"><br>
       <b>Confusion Matrix</b>
     </td>
     <td align="center">
-      <img src="results/text_pipeline/plots/text_pca.png" width="300"><br>
+      <img src="Results/text_pipeline/plots/text_pca.png" width="300"><br>
       <b>Text Embeddings PCA</b>
     </td>
   </tr>
 </table>
 
 <p align="center">
-  <img src="results/text_pipeline/plots/text_representation_evolution.png" width="550" alt="Text Embeddings PCA Space Separation"/>
+  <img src="Results/text_pipeline/plots/text_representation_evolution.png" width="550" alt="Text Embeddings PCA Space Separation"/>
   <br>
   <i>Figure 2: Representations evolution of Text Pipeline.</i>
 </p>
@@ -858,28 +874,28 @@ The MELD result is lower than the TESS result because MELD is a much more realis
 <table>
   <tr>
     <td align="center">
-      <img src="results/fusion_pipeline/plots/training_curve.png" width="300"><br>
+      <img src="Results/fusion_pipeline/plots/training_curve.png" width="300"><br>
       <b>Training Curve</b>
     </td>
     <td align="center">
-      <img src="results/fusion_pipeline/plots/fusion_confusion_matrix.png" width="300"><br>
+      <img src="Results/fusion_pipeline/plots/fusion_confusion_matrix.png" width="300"><br>
       <b>Confusion Matrix</b>
     </td>
     <td align="center">
-      <img src="results/fusion_pipeline/plots/fusion_pca.png" width="300"><br>
+      <img src="Results/fusion_pipeline/plots/fusion_pca.png" width="300"><br>
       <b>Fusion Embeddings PCA</b>
     </td>
   </tr>
 </table>
   <p align="center">
-  <img src="results/fusion_pipeline/plots/fusion_representation_evolution.png" width="550" alt="Fusion Embeddings PCA Space Separation"/>
+  <img src="Results/fusion_pipeline/plots/fusion_representation_evolution.png" width="550" alt="Fusion Embeddings PCA Space Separation"/>
   <br>
   <i>Figure 3: Representations evolution of Fusion Pipeline.</i>
 </p>  
 
 ### Supporting Experiment Visualizations
-* **DailyDialog Confusion Matrix**: Located at `results/text_pipeline_DailyDialog/plots/dailydialog_confusion_matrix.png`
-* **MELD Fusion Confusion Matrix**: Located at `results/fusion_pipeline_MELD/plots/meld_confusion_matrix.png`
+* **DailyDialog Confusion Matrix**: Located at `Results/text_pipeline_DailyDialog/plots/dailydialog_confusion_matrix.png`
+* **MELD Fusion Confusion Matrix**: Located at `Results/fusion_pipeline_MELD/plots/meld_confusion_matrix.png`
 
 ---
 

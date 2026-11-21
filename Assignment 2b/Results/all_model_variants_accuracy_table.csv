@@ -1,0 +1,6 @@
+Pipeline,Modality,Dataset,Architecture,Test_Accuracy_Pct,Test_UAR_Pct,Test_Macro_F1_Pct,Evaluation_Protocol,Status
+Speech Pipeline,Audio,TESS,CNN-BiLSTM-Attention (Mel+Delta+MFCC),99.89,99.89,99.89,5% Target-Speaker Adaptation,Core Variant (Trained)
+Text Pipeline,Text,TESS,DistilBERT (distilbert-base-uncased),14.29,14.29,6.35,5% Target-Speaker Adaptation (Random-chance baseline),Core Variant (Trained)
+Multimodal Fusion Pipeline,Audio + Text,TESS,Custom CNN-BiLSTM-Attention + DistilBERT,98.60,98.60,98.60,5% Target-Speaker Adaptation,Core Variant (Trained)
+Text Pipeline (Supporting),Text,DailyDialog,RoBERTa (roberta-base),78.15,59.92,45.95,Conversational Emotion Benchmark,Supporting Baseline
+Multimodal Fusion (Supporting),Audio + Text,MELD,CNN-BiLSTM-Attention + DistilBERT,57.70,42.24,40.61,In-the-wild Multi-speaker Benchmark,Supporting Baseline
