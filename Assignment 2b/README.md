@@ -7,8 +7,8 @@ The primary dataset used for the core implementation is the Toronto Emotional Sp
 ## Project Links
 
 - **GitHub Repository**: [https://github.com/savioshaju/Assignment_2](https://github.com/savioshaju/Assignment_2)
-- **Assignment 2b Report**: [Report.pdf](Report.pdf)
-- **Assignment 2 Report**: [../Report.pdf](../Report.pdf)
+- **Assignment 2b Report**: [Report.pdf](Report.pdf) ([GitHub Link](https://github.com/savioshaju/Assignment_2/blob/main/Assignment%202b/Report.pdf))
+- **Unified Assignment 2 Report**: [../Report.pdf](../Report.pdf) ([GitHub Link](https://github.com/savioshaju/Assignment_2/blob/main/Report.pdf))
 - **Trained Model Checkpoints (Google Drive)**: [https://drive.google.com/drive/folders/15YZdjhHsL-CtgAwFPwH1rJzM52Lnl5CG](https://drive.google.com/drive/folders/15YZdjhHsL-CtgAwFPwH1rJzM52Lnl5CG)
 
 ## Key Results
