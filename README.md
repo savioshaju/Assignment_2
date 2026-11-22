@@ -83,13 +83,17 @@ Assignment 2b implements and compares three emotion recognition architectures ac
 
 ### Key Results Summary
 
-| Pipeline | Dataset | Modality | Accuracy | Macro F1 | Status |
+| Pipeline | Dataset | Modality | Accuracy | Macro F1 | Protocol / Status |
 |---|---|---|---:|---:|---|
-| **Speech SER** | TESS | Audio | **99.89%** | **99.89%** | Checkpoint Available |
-| **Text SER** | TESS | Text | **14.29%** | **6.35%** | Checkpoint Available |
-| **Multimodal Fusion SER (Custom)** | TESS | Audio + Text | **98.60%** | **98.60%** | Checkpoint Available |
-| **Multimodal Fusion SER (Pretrained WavLM)** | TESS | Audio + Text | **99.68%** | — | Reference Benchmark |
-| **Text SER (DailyDialog)** | DailyDialog | Text | **77.34%** | **46.49%** | Supporting Baseline |
-| **Multimodal Fusion SER (MELD)** | MELD | Audio + Text | **59.50%** | **41.36%** | Supporting Baseline |
+| **Speech SER** | TESS | Audio | **99.89%** *(Adapted)*<br>*(61.34% Zero-Shot)* | **99.89%** *(Adapted)*<br>*(56.88% Zero-Shot)* | 5% Target-Speaker Adaptation *(1)* |
+| **Text SER** | TESS | Text | **14.29%** | **6.35%** | 5% Target-Speaker Adaptation |
+| **Multimodal Fusion SER (Custom)** | TESS | Audio + Text | **98.60%** | **98.60%** | 5% Target-Speaker Adaptation |
+| **Multimodal Fusion SER (Pretrained WavLM)** | TESS | Audio + Text | **99.68%** | — | Literature Benchmark *(2)* |
+| **Text SER (DailyDialog)** | DailyDialog | Text | **77.34%** | **46.49%** | Standard Dialogue Split |
+| **Multimodal Fusion SER (MELD)** | MELD | Audio + Text | **59.50%** | **41.36%** | Class-Weighted Dialogue Split |
+
+*(1) Speech Generalization Note:* Zero-shot evaluation on an unseen speaker yields **61.34% Accuracy (56.88% Macro F1)** due to speaker-specific pitch/formants; 5% target-speaker adaptation calibrates the acoustic model to **99.89% Accuracy (99.89% Macro F1)**.
+
+*(2) WavLM Benchmark Note:* Literature exploratory benchmark using `microsoft/wavlm-base-plus-sv` features and DistilBERT evaluated for overall accuracy without standalone checkpoint persistence. Full reproducible models and checkpoints are provided for the core Speech, Text, and Custom Fusion pipelines.
 
 - **Documentation**: See [`Assignment 2b/README.md`](Assignment%202b/README.md).

@@ -729,7 +729,78 @@ class TextEmotionApp:
         close_btn.pack(pady=(20, 20))
 
 
+def predict_cli(text_input):
+    """Run headless command-line inference on a text utterance."""
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print(f"Using device: {device}")
+
+    config = {}
+    if os.path.exists(CONFIG_PATH):
+        try:
+            with open(CONFIG_PATH, "r", encoding="utf-8") as f:
+                config = json.load(f)
+        except Exception:
+            pass
+
+    classes = config.get(
+        "classes",
+        ["anger", "disgust", "fear", "happiness", "neutral", "sadness", "surprise"]
+    )
+    model_name = config.get("model_name", "distilbert-base-uncased")
+    max_length = int(config.get("max_len", config.get("max_length", 32)))
+    dropout_rate = float(config.get("dropout_rate", 0.30))
+
+    if not os.path.exists(MODEL_PATH):
+        print(f"Error: Model checkpoint not found at {MODEL_PATH}")
+        return
+
+    print("Loading tokenizer and model checkpoint...")
+    tokenizer_path = os.path.join(PIPELINE_DIR, "saved_models")
+    if os.path.exists(os.path.join(tokenizer_path, "tokenizer_config.json")):
+        tokenizer = AutoTokenizer.from_pretrained(tokenizer_path)
+    else:
+        tokenizer = AutoTokenizer.from_pretrained(model_name)
+
+    model = TextEmotionModel(model_name, len(classes), dropout_rate=dropout_rate)
+    checkpoint = torch.load(MODEL_PATH, map_location=device)
+    if isinstance(checkpoint, dict) and "model_state_dict" in checkpoint:
+        model.load_state_dict(checkpoint["model_state_dict"])
+    else:
+        model.load_state_dict(checkpoint)
+
+    model.to(device)
+    model.eval()
+
+    inputs = tokenizer(
+        text_input,
+        max_length=max_length,
+        padding="max_length",
+        truncation=True,
+        return_tensors="pt"
+    )
+    input_ids = inputs["input_ids"].to(device)
+    attention_mask = inputs["attention_mask"].to(device)
+
+    with torch.no_grad():
+        logits = model(input_ids, attention_mask)
+        probabilities = torch.softmax(logits, dim=1).squeeze()
+
+        pred_idx = torch.argmax(probabilities).item()
+        pred_emotion = classes[pred_idx]
+        confidence = probabilities[pred_idx].item() * 100
+
+    print(f"\nInput Text: \"{text_input}\"")
+    print(f"Predicted Emotion: {pred_emotion.upper()}")
+    print(f"Confidence Score: {confidence:.2f}%")
+    print("\nConfidence across all classes:")
+    for i, cls in enumerate(classes):
+        print(f"  {cls:<12}: {probabilities[i].item() * 100:6.2f}%")
+
+
 if __name__ == "__main__":
-    root = ctk.CTk()
-    app = TextEmotionApp(root)
-    root.mainloop()
+    if len(sys.argv) > 1:
+        predict_cli(" ".join(sys.argv[1:]))
+    else:
+        root = ctk.CTk()
+        app = TextEmotionApp(root)
+        root.mainloop()
