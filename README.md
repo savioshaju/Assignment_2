@@ -67,7 +67,7 @@ Assignment 2a explores automated phonetic and lexical alignment using the **Mont
 - **Corpora**: 
   - *Boston University Radio Speech Corpus (BU F2B)*: Fast-paced native broadcast speech (SPHERE container transcoded to 16 kHz mono RIFF WAV).
   - *ISLE Corpus*: Non-native English learner speech with prosodic variations and segmental substitutions.
-- **Dictionary Curation**: Handled critical Out-of-Vocabulary (OOV) proper nouns (`DUKAKIS`, `HENNESSY`, `MAFFY`, `MELNICOVE`, `WBUR`) in `custom_us_arpa.dict`.
+- **Dictionary Curation**: Curated target proper nouns and initialisms (`DUKAKIS`, `HENNESSY`, `MAFFY`, `MELNICOVE`, `WBUR`) in `custom_us_arpa.dict` (145 unique words vs. 142 in baseline).
 - **Experimental Configurations**: Evaluated six setups (Configs A–F) spanning baseline stock models, lexical enhancements, cross-corpus alignment, beam width adjustments (`--beam 100 --retry_beam 400`), phone inventories (Arpabet vs IPA), and Baum-Welch MLLR acoustic adaptation.
 - **Documentation**: See [`Assignment 2a/README.md`](Assignment%202a/README.md).
 

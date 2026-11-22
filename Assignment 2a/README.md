@@ -115,18 +115,18 @@ python scripts/prepare_corpus.py
 
 ## Step 3: Dictionaries
 
-The standard dictionaries lack five words: `DUKAKIS`, `HENNESSY`, `MAFFY`, `MELNICOVE`, and `WBUR`.
+The standard baseline dictionaries contain 142 unique words. Three words were completely absent (Out-of-Vocabulary): `MAFFY`, `MELNICOVE`, and `WBUR`. Two additional proper nouns (`DUKAKIS` and `HENNESSY`) were present in the baseline and had their phonetic entries verified:
 - Baseline pronunciations were extracted from CMUdict (`nltk.corpus.cmudict`).
-- Missing proper names were phonetically transcribed.
-- `WBUR` was manually corrected to spell out each letter name:
+- Missing proper names (`MAFFY`, `MELNICOVE`) were phonetically transcribed via G2P.
+- `WBUR` was transcribed as a discrete letter-name initialism:
   - **Arpabet:** `D AH1 B AH0 L Y UW0 B IY1 Y UW1 AA1 R`
   - **IPA:** `d ʌ b ə l j uː b iː j uː ɑ ɹ`
 
-All four pre-built dictionaries are already included in `dict/`:
-- `dict/english_us_arpa.dict`: Standard CMU Arpabet (142 words)
-- `dict/custom_us_arpa.dict`: Custom Arpabet with missing words (145 words)
-- `dict/english_mfa_standard.dict`: Standard IPA (142 words)
-- `dict/custom_mfa_ipa.dict`: Custom IPA with missing words (145 words)
+All four pre-built dictionaries are included in `dict/`:
+- `dict/english_us_arpa.dict`: Baseline CMU Arpabet (142 unique words, 142 entries)
+- `dict/custom_us_arpa.dict`: Curated Arpabet with 3 OOV words added (145 unique words, 145 entries)
+- `dict/english_mfa_standard.dict`: Baseline MFA IPA (142 unique words, 222 entries including variants)
+- `dict/custom_mfa_ipa.dict`: Curated IPA with 3 OOV words added and redundant variants pruned (145 unique words, 221 entries)
 
 No extra G2P download is needed to run the alignments. *(Optional) To rebuild the dictionary files:*
 ```bash
