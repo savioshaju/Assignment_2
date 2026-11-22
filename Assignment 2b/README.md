@@ -985,8 +985,3 @@ This project comprehensively implements and evaluates three emotion recognition 
 
 The project successfully demonstrates a complete machine learning pipeline for emotion recognition, from data preprocessing through model training, evaluation, and inference. Checkpoints for the models are available in Google Drive.
 
----
-
-## License
-
-This project is intended for academic and research purposes.
