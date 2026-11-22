@@ -372,9 +372,14 @@ The script scans these folders for `.wav` files and extracts the `speaker_id` (e
 The `preprocess.py` script performs audio processing, feature extraction, and metadata generation.
 1. **Audio Loading**: Files are loaded at 16 kHz using `librosa`, silence is trimmed, and the waveform is fixed to a length of 3 seconds.
 2. **Feature Extraction**: It extracts three distinct acoustic features:
-   - Log-Mel Spectrogram (in dB, 128 bands)
-   - Delta Mel Spectrogram (first-order derivative)
-   - MFCCs (40 coefficients, repeated 4 times and sliced to match the 128-band Mel dimension)
+   - **Log-Mel Spectrogram** (in dB, 128 bands): captures broad frequency energy distribution.
+   - **Delta Mel Spectrogram**: first-order temporal derivative capturing spectral velocity.
+   - **MFCCs** (40 cepstral coefficients): captures vocal tract resonances.
+   
+   > **Note on Dimension Matching vs. Acoustic Alignment**:
+   > To stack these three features into a unified 3-channel input tensor `(3, 128, time_frames)` for 2D CNN processing:
+   > - The time dimension is synchronized using `librosa.util.fix_length`. **This is an array-level padding/truncation operation to match frame matrix dimensions, not a real phonetic or acoustic time alignment.**
+   > - The vertical dimension (40 cepstral coefficients) is expanded via 4x repetition and truncated to 128 bins to match the 128 Mel bands. This permits 2D spatial convolution across channels, but does not imply a physical 1:1 mapping between cepstral quefrency and Mel frequency bins.
 3. **Saving Features**: These three channels are stacked into a 3D NumPy array of shape `(3, 128, time_frames)` and saved as `.npy` files in the `models/speech_pipeline/processed_data/` directory.
 
 The script creates `models/speech_pipeline/metadata.csv` with columns: `file_path`, `feature_path`, `emotion`, `speaker_id`, `raw_emotion`, `original_folder`, `original_file`, `dataset`, `sample_rate`, `duration`, `feature_type`, `feature_shape`.
