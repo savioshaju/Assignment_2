@@ -238,6 +238,109 @@ Performance metrics from `experiments/comparison/alignment_metrics.csv`:
 
 ---
 
+### Empirical Demonstration of OOV Alignment Gaps (E1 vs. E3)
+
+When words are absent from the baseline lexicon, MFA maps the missing token to a single generic spoken-noise phone (`spn`), obscuring all internal phonemic transitions. Curating the dictionary in E3 resolves these tokens into fine-grained phoneme intervals:
+
+| Word Token | Time Interval | Duration | E1 (Standard Dictionary) | E3 (Curated Custom Dictionary) |
+| :--- | :---: | :---: | :--- | :--- |
+| `as` | 20.360 s – 20.560 s | 200 ms | `AE1`(120 ms) `Z`(80 ms) | `AE1`(120 ms) `Z`(80 ms) |
+| **`wbur`** | 20.560 s – 21.320 s | 760 ms | **`spn`(770 ms)** *(Opaque acoustic gap)* | **13 phones**: `D` `AH1` `B` `AH0` `L` `Y` `UW0` `B` `IY1` `Y` `UW1` `AA1` `R` |
+| `margo` | 21.440 s – 21.740 s | 300 ms | `M`(60 ms) `AA1`(30 ms) `R`(80 ms) `G`(60 ms) `OW0`(80 ms) | `M`(60 ms) `AA1`(30 ms) `R`(80 ms) `G`(60 ms) `OW0`(70 ms) |
+| **`melnicove`** | 21.740 s – 22.300 s | 560 ms | **`spn`(530 ms)** *(Opaque acoustic gap)* | **8 phones**: `M`(60 ms) `EH1`(50 ms) `L`(50 ms) `N`(70 ms) `IH0`(50 ms) `K`(100 ms) `OW0`(90 ms) `V`(90 ms) |
+| `reports` | 22.300 s – 22.870 s | 570 ms | `R`(60 ms) `IH0`(60 ms) `P`(120 ms) `AO1`(50 ms) ... | `R`(40 ms) `IH0`(60 ms) `P`(120 ms) `AO1`(50 ms) ... |
+
+---
+
+### Sample TextGrid Excerpt
+
+Excerpt from `experiments/model_A/custom_dictionary/ISLE_SESS0131_BLOCKD02_01_sprt1.TextGrid`:
+
+```text
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0 
+xmax = 4.125 
+tiers? <exists> 
+size = 2 
+item []: 
+    item [1]:
+        class = "IntervalTier" 
+        name = "words" 
+        xmin = 0 
+        xmax = 4.125 
+        intervals: size = 8 
+        intervals [1]:
+            xmin = 0.0 
+            xmax = 0.44 
+            text = "" 
+        intervals [2]:
+            xmin = 0.44 
+            xmax = 0.53 
+            text = "i" 
+        intervals [3]:
+            xmin = 0.53 
+            xmax = 0.92 
+            text = "said" 
+        intervals [4]:
+            xmin = 0.92 
+            xmax = 1.33 
+            text = "white" 
+        intervals [5]:
+            xmin = 1.33 
+            xmax = 1.48 
+            text = "" 
+        intervals [6]:
+            xmin = 1.48 
+            xmax = 1.8 
+            text = "not" 
+        intervals [7]:
+            xmin = 1.8 
+            xmax = 2.24 
+            text = "bait" 
+    item [2]:
+        class = "IntervalTier" 
+        name = "phones" 
+        xmin = 0 
+        xmax = 4.125 
+        intervals: size = 16 
+        intervals [1]:
+            xmin = 0.0 
+            xmax = 0.44 
+            text = "" 
+        intervals [2]:
+            xmin = 0.44 
+            xmax = 0.53 
+            text = "AY1" 
+        intervals [3]:
+            xmin = 0.53 
+            xmax = 0.71 
+            text = "S" 
+        intervals [4]:
+            xmin = 0.71 
+            xmax = 0.79 
+            text = "EH1" 
+        intervals [5]:
+            xmin = 0.79 
+            xmax = 0.92 
+            text = "D" 
+        intervals [6]:
+            xmin = 0.92 
+            xmax = 1.03 
+            text = "W" 
+        intervals [7]:
+            xmin = 1.03 
+            xmax = 1.17 
+            text = "AY1" 
+        intervals [8]:
+            xmin = 1.17 
+            xmax = 1.33 
+            text = "T" 
+```
+
+---
+
 ## Troubleshooting
 
 1. **Audio Header Error (`NIST_1A`):**
