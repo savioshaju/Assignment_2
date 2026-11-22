@@ -14,5 +14,5 @@ This directory aggregates all primary evaluation figures across the three model 
 - `fusion_pca_clusters.png`: 2D PCA emotional cluster separability from **The Fusion block**.
 
 ## Supporting Benchmark Experiments
-- `dailydialog_confusion_matrix.png`: RoBERTa text emotion classification on conversational DailyDialog dataset (78.15% Accuracy).
-- `meld_confusion_matrix.png`: Multimodal emotion classification on noisy dialogue MELD dataset (57.70% Accuracy).
+- `dailydialog_confusion_matrix.png`: RoBERTa text emotion classification on conversational DailyDialog dataset (77.34% Accuracy).
+- `meld_confusion_matrix.png`: Multimodal emotion classification on noisy dialogue MELD dataset (59.50% Accuracy).
